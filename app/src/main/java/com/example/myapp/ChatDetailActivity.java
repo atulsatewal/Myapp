@@ -40,7 +40,7 @@ public class ChatDetailActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         final String senderId = auth.getUid();
-        String recieverId = getIntent().getStringExtra("userId");
+        String recieveId = getIntent().getStringExtra("userId");
         String userName = getIntent().getStringExtra("userName");
         String profilePic = getIntent().getStringExtra("profilePic");
 
@@ -55,14 +55,14 @@ public class ChatDetailActivity extends AppCompatActivity {
             }
         });
     final ArrayList<MessageModel> messageModels =new ArrayList();
-    final ChatAdapter chatAdapter = new ChatAdapter(messageModels , this  );
+    final ChatAdapter chatAdapter = new ChatAdapter(messageModels , this  , recieveId);
     binding.chatRecylearView.setAdapter(chatAdapter);
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this );
         binding.chatRecylearView.setLayoutManager(layoutManager);
 
-        final String senderRoom =senderId +recieverId;
-        final String receiverRoom =recieverId+senderId;
+        final String senderRoom =senderId +recieveId;
+        final String receiverRoom =recieveId+senderId;
 
         database.getReference().child("chats")
                 .child(senderRoom)
@@ -74,6 +74,8 @@ public class ChatDetailActivity extends AppCompatActivity {
                         for (DataSnapshot snapshot1 : snapshot.getChildren())
                         {
                             MessageModel model = snapshot1.getValue(MessageModel.class);
+                           model.setMessageId(snapshot1.getKey());
+
                             messageModels.add(model);
 
                         }

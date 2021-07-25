@@ -47,7 +47,7 @@ public class GroupChatActivity extends AppCompatActivity {
         final ArrayList<MessageModel> messageModels =new ArrayList<>();
 
         final String senderId= FirebaseAuth.getInstance().getUid();
-        binding.userName.setText("Friends Group");
+        binding.userName.setText("COVID WARRIORS");
         final ChatAdapter adapter = new ChatAdapter(messageModels , this);
         binding.chatRecylearView.setAdapter(adapter);
 
